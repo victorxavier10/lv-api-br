@@ -1,0 +1,354 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid(7)) @db.Uuid
+  status    Int?      @default(0)
+  profile   Profile?
+  role      Role      @default(USER)
+  email     String    @unique
+  password  String
+  name      String?
+  logs      Log[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("users")
+}
+
+model Profile {
+  id               String            @id @default(uuid(7)) @db.Uuid
+  status           Int?              @default(0)
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String            @unique @db.Uuid
+  name             String?           @db.VarChar(30)
+  phone            String?           @db.VarChar(20)
+  bio              String?           @db.Text
+  openHour         String?           @db.VarChar(5)
+  closeHour        String?           @db.VarChar(5)
+  startDay         String?           @db.VarChar(30)
+  finalDay         String?           @db.VarChar(30)
+  minPrice         Decimal?          @db.Decimal(9, 2)
+  maxPrice         Decimal?          @db.Decimal(9, 2)
+  verified         Boolean           @default(false)
+  images           Image[]
+  schedules        Schedule[]
+  workingHours     WorkingHour[]
+  hoursPoints      HourPoints[]
+  states           State[]
+  profileLocation  ProfileLocation[]
+  citiesZones      CityZone[]
+  districts        District[]
+  districtsZones   DistrictZone[]
+  ratings          Rating[]
+  categories       Category[]
+  plans            Plan[]
+  services         Service[]
+  totalPointsPlans Int?
+  numberOfRatings  Int?
+  totalOfRatings   Int?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  deletedAt        DateTime?
+
+  @@map("profiles")
+}
+
+model Image {
+  id        Int       @id @default(autoincrement())
+  profile   Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId String    @db.Uuid
+  url       String
+  published Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("images")
+}
+
+model Schedule {
+  id           Int           @id @default(autoincrement())
+  profile      Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId    String        @db.Uuid
+  day          Day
+  isWorkingDay Boolean       @default(false)
+  workingHours WorkingHour[]
+  hoursPoints  HourPoints[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+
+  @@map("schedules")
+}
+
+model WorkingHour {
+  id          Int          @id @default(autoincrement())
+  profile     Profile      @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId   String       @db.Uuid
+  schedule    Schedule     @relation(fields: [scheduleId], references: [id])
+  scheduleId  Int
+  hoursPoints HourPoints[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  deletedAt   DateTime?
+
+  @@map("workinghours")
+}
+
+model HourPoints {
+  id            Int         @id @default(autoincrement())
+  profile       Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId     String      @db.Uuid
+  schedule      Schedule    @relation(fields: [scheduleId], references: [id])
+  scheduleId    Int
+  workingHour   WorkingHour @relation(fields: [workingHourId], references: [id])
+  workingHourId Int
+  point         String
+  type          PointType
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  deletedAt     DateTime?
+
+  @@map("hour-points")
+}
+
+model Rating {
+  id              Int       @id @default(autoincrement())
+  profile         Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId       String    @db.Uuid
+  comment         String
+  numberOfRatings Int
+  totalOfRatings  Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  @@map("ratings")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  profiles  Profile[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("categories")
+}
+
+model State {
+  id              Int               @id
+  name            String
+  cities          City[]
+  profiles        Profile[]
+  profileLocation ProfileLocation[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+
+  @@map("states")
+}
+
+model City {
+  id              Int               @id
+  uf              String            @db.VarChar(2)
+  name            String
+  state           State             @relation(fields: [stateId], references: [id])
+  stateId         Int
+  profileLocation ProfileLocation[]
+  cityZones       CityZone[]
+  districts       District[]
+  districtsZones  DistrictZone[]
+  neighborhoods   Neighborhoods[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+
+  @@map("cities")
+}
+
+model ProfileLocation {
+  profile           Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId         String        @db.Uuid
+  city              City          @relation(fields: [cityId], references: [id])
+  cityId            Int
+  neighborhood      Neighborhoods @relation(fields: [neighborhoodsId], references: [id])
+  neighborhoodsId   Int
+  zone              Zone          @relation(fields: [zoneId], references: [id])
+  zoneId            Int
+  state             State         @relation(fields: [stateId], references: [id])
+  stateId           Int
+  address           String?
+  addressNumber     String?
+  addressCEP        String?
+  addressComplement String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  deletedAt         DateTime?
+
+  @@id([profileId, cityId, stateId]) // Chave composta para garantir unicidade
+}
+
+model Zone {
+  id              Int               @id @default(autoincrement())
+  name            String
+  profileLocation ProfileLocation[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+
+  @@map("zones")
+}
+
+model Neighborhoods {
+  id              Int               @id
+  idCity          Int
+  city            City              @relation(fields: [cityId], references: [id])
+  cityId          Int
+  name            String
+  profileLocation ProfileLocation[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+
+  @@map("neighborhoods")
+}
+
+model CityZone {
+  id             Int            @id @default(autoincrement())
+  name           String
+  city           City?          @relation(fields: [cityId], references: [id])
+  cityId         Int?
+  districts      District[]
+  districtsZones DistrictZone[]
+  profiles       Profile[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  deletedAt      DateTime?
+
+  @@map("cities-zones")
+}
+
+model District {
+  id             Int            @id @default(autoincrement())
+  name           String
+  city           City?          @relation(fields: [cityId], references: [id])
+  cityId         Int?
+  cityZone       CityZone?      @relation(fields: [cityZoneId], references: [id])
+  cityZoneId     Int?
+  districtsZones DistrictZone[]
+  profiles       Profile[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  deletedAt      DateTime?
+
+  @@map("districts")
+}
+
+model DistrictZone {
+  id         Int       @id @default(autoincrement())
+  name       String
+  city       City?     @relation(fields: [cityId], references: [id])
+  cityId     Int?
+  cityZone   CityZone? @relation(fields: [cityZoneId], references: [id])
+  cityZoneId Int?
+  district   District? @relation(fields: [districtId], references: [id])
+  districtId Int?
+  profiles   Profile[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+
+  @@map("districts-zones")
+}
+
+model Plan {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  price       Decimal?  @db.Decimal(9, 2)
+  points      Int
+  profiles    Profile[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  @@map("plans")
+}
+
+enum Role {
+  USER
+  ADMIN
+
+  @@map("roles")
+}
+
+enum Day {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
+
+  @@map("days")
+}
+
+enum PointType {
+  In
+  Out
+
+  @@map("point-type")
+}
+
+model Code {
+  id        Int       @id @default(autoincrement())
+  email     String
+  code      String    @db.VarChar(6)
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+
+  @@map("codes")
+}
+
+model Log {
+  id          Int      @id @default(autoincrement())
+  description String   @db.VarChar(80)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @db.Uuid
+
+  @@map("logs")
+}
+
+model Service {
+  id          Int       @id @default(autoincrement())
+  profile     Profile   @relation(fields: [profileId], references: [id])
+  profileId   String    @db.Uuid
+  title       String
+  description String
+  value       String    @db.VarChar(5)
+  time        String    @db.VarChar(5)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  @@map("service")
+}
