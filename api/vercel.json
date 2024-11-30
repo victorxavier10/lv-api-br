@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "lv-api-br/api/index.ts",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "lv-api-br/api/routes/(.*)",
+        "dest": "lv-api-br/api/index.ts"
+      }
+    ]
+  }
