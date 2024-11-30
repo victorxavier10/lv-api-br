@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npx ts-node-dev --respawn index.ts",
     "migrate": "npx prisma migrate dev --name nome_migrate",
-    "seed": "ts-node prisma/seeds/seed.ts"
+    "seed": "ts-node prisma/seeds/seed.ts",
+    "vercel-build": "npx prisma generate && npx prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
