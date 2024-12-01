@@ -1,42 +1,29 @@
 import nodemailer from 'nodemailer';
-import { SentMessageInfo } from 'nodemailer';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
-const transporter = nodemailer.createTransport({
+const smtpOptions: SMTPTransport.Options = {
   host: process.env.MAIL_HOST,
   port: Number(process.env.MAIL_PORT),
-  secure: Boolean(process.env.MAIL_SECURE),
+  secure: process.env.MAIL_SECURE === 'true',
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
-});
-
-// Função para verificar a conexão SMTP
-const verifyTransporter = async () => {
-  await new Promise<void>((resolve, reject) => {
-    transporter.verify(function (error, success) {
-      if (error) {
-        console.error('Erro na verificação do transporte:', error);
-        reject(error);
-      } else {
-        console.log('Servidor SMTP está pronto para enviar mensagens');
-        resolve();
-      }
-    });
-  });
 };
+
+const transporter = nodemailer.createTransport(smtpOptions);
 
 const sendEmail = async (
   to: string,
   subject: string,
   body: any
-): Promise<SentMessageInfo> => {
+): Promise<nodemailer.SentMessageInfo> => {
   try {
-    // Verifica a conexão antes de enviar o e-mail
-    await verifyTransporter();
+    // Verifica a conexão SMTP (opcional, mas recomendado)
+    await transporter.verify();
 
     const info = await transporter.sendMail({
-      from: process.env.MAIL_FROM || '',
+      from: process.env.MAIL_FROM || 'no-reply@lavarauto.com',
       to,
       subject,
       html: body,
