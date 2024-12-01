@@ -1,29 +1,25 @@
 import nodemailer from 'nodemailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { MailtrapTransport } from 'mailtrap';
 
-const smtpOptions: SMTPTransport.Options = {
-  host: process.env.MAIL_HOST,
-  port: Number(process.env.MAIL_PORT),
-  secure: process.env.MAIL_SECURE === 'true',
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
-  },
-};
-
-const transporter = nodemailer.createTransport(smtpOptions);
+const transporter = nodemailer.createTransport(
+  MailtrapTransport({
+    token: process.env.MAILTRAP_TOKEN || '',
+  })
+);
 
 const sendEmail = async (
-  to: string,
+  to: string | string[],
   subject: string,
-  body: any
+  body: string
 ): Promise<nodemailer.SentMessageInfo> => {
   try {
-    // Verifica a conexão SMTP (opcional, mas recomendado)
-    await transporter.verify();
+    const from = {
+      address: process.env.MAIL_FROM || 'no-reply@lavarauto.com',
+      name: 'Lavar Auto',
+    };
 
     const info = await transporter.sendMail({
-      from: process.env.MAIL_FROM || 'no-reply@lavarauto.com',
+      from,
       to,
       subject,
       html: body,
