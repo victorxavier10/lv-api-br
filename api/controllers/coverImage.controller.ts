@@ -74,20 +74,8 @@ const uploadCoverImage = async (req: Request, res: Response) => {
         const s3File = file as S3File;
         imageFileName = s3File.key;
 
-        // Gerar URL pré-assinada
-        const command = new GetObjectCommand({
-            Bucket: process.env.AWS_S3_BUCKET_NAME!,
-            Key: imageFileName,
-        });
-
-        const expiresIn = 3600; // URL válida por 1 hora (valor em segundos)
-
-        try {
-            imageUrl = await getSignedUrl(s3, command, { expiresIn });
-        } catch (error) {
-            console.error('Erro ao gerar URL pré-assinada:', error);
-            return res.status(500).json({ error: 'Erro ao gerar a URL da imagem.' });
-        }
+        // Construir a URL pública
+        imageUrl = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${imageFileName}`;
     } else {
         imageFileName = file.filename;
         imageUrl = `${req.protocol}://${req.get('host')}/uploads/${imageFileName}`;
