@@ -6,21 +6,17 @@ const logClient = new PrismaClient().log
 
 export const getAllProfiles = async (req, res) => {
     try {
-        const allProfiles = await profileClient.findMany({
-            include: {
-                images: true,
-                schedules: true,
-                profileLocation: true,
-                ratings: true,
-                categories: true,
-                plans: true,
-            }
-        })
-        res.status(200).json({ data: allProfiles })
+      const allProfiles = await profileClient.findMany({
+        select: {
+          id: true,
+          updatedAt: true,
+        },
+      });
+      res.status(200).json({ data: allProfiles });
     } catch (error) {
-        res.status(400).json(error)
+      res.status(400).json(error);
     }
-}
+  };
 
 export const getProfileById = async (req, res) => {
     const { id } = req.params
