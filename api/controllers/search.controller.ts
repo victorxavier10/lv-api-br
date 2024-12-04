@@ -8,12 +8,47 @@ const profileLocationClient = new PrismaClient().profileLocation
 
 export const getAllCities = async (req, res) => {
 	try {
-		const cities = await cityClient.findMany()
-		res.status(200).json(cities)
+	  // Fetch all cities with their stateId
+	  const cities = await cityClient.findMany({
+		select: {
+		  id: true,
+		  name: true,
+		  stateId: true, // Ensure stateId is included
+		},
+	  });
+  
+	  // Fetch all states
+	  const states = await stateClient.findMany({
+		select: {
+		  id: true,
+		  name: true,
+		},
+	  });
+  
+	  // Create a Map of states for quick lookup by stateId
+	  const stateMap = new Map();
+	  states.forEach((state) => {
+		stateMap.set(state.id, state.name);
+	  });
+  
+	  // Merge cities with their state information
+	  const citiesWithStateInfo = cities.map((city) => {
+		const stateName = stateMap.get(city.stateId);
+		return {
+		  id: city.id,
+		  name: city.name,
+		  stateId: city.stateId,
+		  stateName: stateName,
+		};
+	  });
+  
+	  res.status(200).json({ data: citiesWithStateInfo });
 	} catch (error) {
-		res.status(400).json(error)
+	  console.error('Error fetching cities and states:', error);
+	  res.status(500).json({ error: 'Internal Server Error' });
 	}
-}
+  };
+  
 
 export const getCityById = async (req, res) => {
 	const { id } = req.params
@@ -123,12 +158,18 @@ export const getCityByContainName = async (req, res) => {
 
 export const getAllStates = async (req, res) => {
 	try {
-		const states = await stateClient.findMany()
-		res.status(200).json(states)
+		const states = await stateClient.findMany({
+			select: {
+				id: true,
+				name: true,
+			},
+		});
+		res.status(200).json({ data: states });
 	} catch (error) {
-		res.status(400).json(error)
+		res.status(400).json(error);
 	}
-}
+};
+
 
 export const getStateById = async (req, res) => {
 	const { id } = req.params
