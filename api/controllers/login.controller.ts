@@ -46,7 +46,7 @@ export const userLogin = async (req, res) => {
                 userName: user.name
             },
                 process.env.JWT_KEY,
-                { expiresIn: "1h" }
+                { expiresIn: "168h" }
             )
 
             res.status(201).json({ token: token, userId: user.id, userName: user.name, profileId: user.profile.id })

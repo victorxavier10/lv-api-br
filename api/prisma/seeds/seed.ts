@@ -173,6 +173,7 @@ async function main() {
       { name: 'Sul' },
       { name: 'Leste' },
       { name: 'Oeste' },
+      { name: 'Não dividida por zona / Cidade pequena' },
     ];
 
     try {

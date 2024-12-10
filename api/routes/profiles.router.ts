@@ -7,7 +7,7 @@ const profileRouter = Router()
 
 profileRouter
 	// .get("/", tokenVerify, getAllProfiles) // Com middleware
-	// .get("/", getAllProfiles)
+	.get("/", getAllProfiles)
 	.get("/:id", getProfileById)
 	// .get("/list/total-points", getListOfTotalPoints)
 	// .get("/list/max-price", getListOfMaxPrice)

@@ -343,7 +343,7 @@ model Service {
   profile     Profile   @relation(fields: [profileId], references: [id])
   profileId   String    @db.Uuid
   title       String
-  description String
+  description String    @db.Text
   value       String    @db.VarChar(5)
   time        String    @db.VarChar(5)
   createdAt   DateTime  @default(now())
