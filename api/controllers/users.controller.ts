@@ -112,7 +112,7 @@ export const createUser = async (req, res) => {
         })
         if (user) {
             const to = email
-            const subject = "Lavar Auto - Confirme seu e-mail."
+            const subject = "Lavar Carro - Confirme seu e-mail."
             const body = `
             <!DOCTYPE html>
             <html lang="pt-BR">
@@ -124,18 +124,18 @@ export const createUser = async (req, res) => {
                     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
                         <!-- Cabeçalho -->
                         <div style="padding: 20px; text-align: center;">
-                        <img src="https://br-lv-image-logo.s3.us-east-1.amazonaws.com/logo-on.png" alt="Logo Lavar Auto" style="width: 120px;">
+                        <img src="https://br-lv-image-logo.s3.us-east-1.amazonaws.com/logo-on.png" alt="Logo Lavar Carro" style="width: 120px;">
                         </div>
                         <!-- Conteúdo -->
                         <div style="padding: 30px 20px; text-align: center;">
                         <h1 style="font-size: 24px; color: #333333; margin-bottom: 20px;">Confirme seu e-mail</h1>
-                        <p style="font-size: 16px; color: #555555;">Clique no botão abaixo para concluir o cadastro na Lavar Auto:</p>
+                        <p style="font-size: 16px; color: #555555;">Clique no botão abaixo para concluir o cadastro na Lavar Carro:</p>
                         <a href="${webBaseUrl}/painel/${user.id}/${email}" style="display: inline-block; padding: 15px 25px; background-color: #437FE5; color: #ffffff; text-decoration: none; font-size: 20px; border-radius: 5px; margin: 20px 0;">Clique aqui para confirmar o e-mail</a>
                         <p style="font-size: 16px; color: #555555;">Se você não solicitou este e-mail, por favor ignore-o.</p>
                         </div>
                         <!-- Rodapé -->
                         <div style="padding: 20px; text-align: center; font-size: 12px; color: #999999;">
-                        © 2024 Lavar Auto. Todos os direitos reservados.
+                        © 2024 Lavar Carro. Todos os direitos reservados.
                         </div>
                     </div>
                 </body>
@@ -244,7 +244,7 @@ export const generateCode = async (req, res) => {
         if (user) {
             if (code) {
                 const to = email
-                const subject = "Lavar Auto - Código para alteração de senha."
+                const subject = "Lavar Carro - Código para alteração de senha."
                 const body = `
                 <!DOCTYPE html>
                 <html lang="pt-BR">
@@ -256,7 +256,7 @@ export const generateCode = async (req, res) => {
                         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
                             <!-- Cabeçalho -->
                             <div style="padding: 20px; text-align: center;">
-                            <img src="https://br-lv-image-logo.s3.us-east-1.amazonaws.com/logo-on.png" alt="Logo Lavar Auto" style="width: 120px;">
+                            <img src="https://br-lv-image-logo.s3.us-east-1.amazonaws.com/logo-on.png" alt="Logo Lavar Carro" style="width: 120px;">
                             </div>
                             <!-- Conteúdo -->
                             <div style="padding: 30px 20px; text-align: center;">
@@ -267,7 +267,7 @@ export const generateCode = async (req, res) => {
                             </div>
                             <!-- Rodapé -->
                             <div style="padding: 20px; text-align: center; font-size: 12px; color: #999999;">
-                            © 2024 Lavar Auto. Todos os direitos reservados.
+                            © 2024 Lavar Carro. Todos os direitos reservados.
                             </div>
                         </div>
                     </body>
@@ -433,28 +433,28 @@ export const emailValidate = async (req, res) => {
 
             if (profile) {
                 const to = email
-                const subject = "Lavar Auto - E-mail validado com sucesso!"
+                const subject = "Lavar Carro - E-mail validado com sucesso!"
                 const body = `
                 <!DOCTYPE html>
                 <html lang="pt-BR">
                 <head>
                 <meta charset="UTF-8">
-                <title>Bem-vindo(a) à Lavar Auto</title>
+                <title>Bem-vindo(a) à Lavar Carro</title>
                 </head>
                     <body style="font-family: 'Arial', sans-serif; background-color: #f5f5f5; margin: 0; padding: 0;">
                         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
                             <!-- Cabeçalho -->
                             <div style="padding: 20px; text-align: center;">
-                            <img src="https://br-lv-image-logo.s3.us-east-1.amazonaws.com/logo-on.png" alt="Logo Lavar Auto" style="width: 120px;">
+                            <img src="https://br-lv-image-logo.s3.us-east-1.amazonaws.com/logo-on.png" alt="Logo Lavar Carro" style="width: 120px;">
                             </div>
                             <!-- Conteúdo -->
                             <div style="padding: 30px 20px; text-align: center;">
-                            <h1 style="font-size: 28px; color: #333333; margin-bottom: 20px;">Seja bem-vindo(a) à Lavar Auto!</h1>
+                            <h1 style="font-size: 28px; color: #333333; margin-bottom: 20px;">Seja bem-vindo(a) à Lavar Carro!</h1>
                             <p style="font-size: 16px; color: #555555;">Estamos muito felizes em ter você conosco. Você faz parte da primeira plataforma dedicada à estéticas automotivas do brasil.</p>
                             </div>
                             <!-- Rodapé -->
                             <div style="padding: 20px; text-align: center; font-size: 12px; color: #999999;">
-                            © 2024 Lavar Auto. Todos os direitos reservados.
+                            © 2024 Lavar Carro. Todos os direitos reservados.
                             </div>
                         </div>
                     </body>

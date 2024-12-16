@@ -15,7 +15,7 @@ const sendEmail = async (
   try {
     const from = {
       address: process.env.MAIL_FROM || 'no-reply@lavarauto.com',
-      name: 'Lavar Auto',
+      name: 'Lavar Carro',
     };
 
     const info = await transporter.sendMail({
