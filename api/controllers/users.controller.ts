@@ -124,13 +124,11 @@ export const createUser = async (req, res) => {
                     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
                         <!-- Cabeçalho -->
                         <div style="padding: 20px; text-align: center;">
-                        <img src="https://br-lv-image-logo.s3.us-east-1.amazonaws.com/logo-on.png" alt="Logo Lavar Carro" style="width: 120px;">
                         </div>
                         <!-- Conteúdo -->
                         <div style="padding: 30px 20px; text-align: center;">
-                        <h1 style="font-size: 24px; color: #333333; margin-bottom: 20px;">Confirme seu e-mail</h1>
-                        <p style="font-size: 16px; color: #555555;">Confirmar cadastro na Lavar Carro:</p>
-                        <a href="${webBaseUrl}/painel/${user.id}/${email}" style="display: inline-block; padding: 15px 25px; background-color: #437FE5; color: #ffffff; text-decoration: none; font-size: 20px; border-radius: 5px; margin: 20px 0;">Confirmar e-mail</a>
+                        <h1 style="font-size: 24px; color: #333333; margin-bottom: 20px;">Confirme seu E-mail</h1>
+                        <a href="${webBaseUrl}/painel/${user.id}/${email}" style="display: inline-block; padding: 15px 25px; background-color: #437FE5; color: #ffffff; text-decoration: none; font-size: 20px; border-radius: 5px; margin: 20px 0; padding: 4px">Confirmar E-mail</a>
                         <p style="font-size: 16px; color: #555555;">Se você não solicitou este e-mail, por favor ignore-o.</p>
                         </div>
                         <!-- Rodapé -->
@@ -259,7 +257,6 @@ export const generateCode = async (req, res) => {
                         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
                             <!-- Cabeçalho -->
                             <div style="padding: 20px; text-align: center;">
-                            <img src="https://br-lv-image-logo.s3.us-east-1.amazonaws.com/logo-on.png" alt="Logo Lavar Carro" style="width: 120px;">
                             </div>
                             <!-- Conteúdo -->
                             <div style="padding: 30px 20px; text-align: center;">
@@ -269,6 +266,9 @@ export const generateCode = async (req, res) => {
                             <p style="font-size: 16px; color: #555555;">Este código expira em 15 minutos.</p>
                             </div>
                             <!-- Rodapé -->
+                            <div style="padding: 20px; text-align: center; font-size: 12px; color: #999999;">
+                            lavarcarro.com
+                            </div>
                             <div style="padding: 20px; text-align: center; font-size: 12px; color: #999999;">
                             © 2024 Lavar Carro. Todos os direitos reservados.
                             </div>
@@ -448,14 +448,16 @@ export const emailValidate = async (req, res) => {
                         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
                             <!-- Cabeçalho -->
                             <div style="padding: 20px; text-align: center;">
-                            <img src="https://br-lv-image-logo.s3.us-east-1.amazonaws.com/logo-on.png" alt="Logo Lavar Carro" style="width: 120px;">
                             </div>
                             <!-- Conteúdo -->
                             <div style="padding: 30px 20px; text-align: center;">
                             <h1 style="font-size: 28px; color: #333333; margin-bottom: 20px;">Seja bem-vindo(a) à Lavar Carro!</h1>
-                            <p style="font-size: 16px; color: #555555;">Estamos muito felizes em ter você conosco. Você faz parte da primeira plataforma dedicada à estéticas automotivas do brasil.</p>
+                            <p style="font-size: 16px; color: #555555;">Estamos muito felizes em ter você conosco. Você faz parte da primeira plataforma dedicada à estéticas automotivas do Brasil.</p>
                             </div>
                             <!-- Rodapé -->
+                            <div style="padding: 20px; text-align: center; font-size: 12px; color: #999999;">
+                            lavarcarro.com
+                            </div>
                             <div style="padding: 20px; text-align: center; font-size: 12px; color: #999999;">
                             © 2024 Lavar Carro. Todos os direitos reservados.
                             </div>
