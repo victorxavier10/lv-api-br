@@ -26,7 +26,10 @@ const sendEmail = async (
       subject,
       html: body,
       text,
-      messageId
+      messageId,
+      headers: {
+        'Message-ID': messageId
+      }
     });
 
     console.log('E-mail enviado:', info);
