@@ -14,7 +14,7 @@ const sendEmail = async (
 ): Promise<nodemailer.SentMessageInfo> => {
   try {
     const from = {
-      address: process.env.MAIL_FROM || 'no-reply@lavarauto.com',
+      address: process.env.MAIL_FROM || 'no-reply@lavarcarro.com',
       name: 'Lavar Carro',
     };
 
