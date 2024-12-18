@@ -115,7 +115,7 @@ export const createUser = async (req, res) => {
             const to = email
             const subject = "Lavar Carro - Confirme seu e-mail."
             const text = `Versão texto simples: Confirme seu e-mail acessando o link: ${webBaseUrl}/painel/${user.id}/${email} caso não consiga visualizar o e-mail estilizado.`
-            const messageId = `${uuidv7()}+${to}@lavarcarro.com`
+            const messageId = `<${uuidv7()}@lavarcarro.com>`
             const body = `
             <!DOCTYPE html>
             <html lang="pt-BR">
@@ -251,7 +251,7 @@ export const generateCode = async (req, res) => {
                 const to = email
                 const subject = "Lavar Carro - Código para alteração de senha."
                 const text = `Versão texto simples: Este é o seu código para alteração de senha: ${code.code} caso não consiga visualizar o e-mail estilizado.`
-                const messageId = `${uuidv7()}+${to}@lavarcarro.com`
+                const messageId = `<${uuidv7()}@lavarcarro.com>`
                 const body = `
                 <!DOCTYPE html>
                 <html lang="pt-BR">
@@ -444,7 +444,7 @@ export const emailValidate = async (req, res) => {
                 const to = email
                 const subject = "Lavar Carro - E-mail validado com sucesso!"
                 const text = `Versão texto simples: Seja bem-vindo(a) à Lavar Carro! Estamos muito felizes em ter você conosco. Você faz parte da primeira plataforma dedicada à estéticas automotivas do Brasil. Caso não consiga visualizar o e-mail estilizado.`
-                const messageId = `${uuidv7()}+${to}@lavarcarro.com`
+                const messageId = `<${uuidv7()}@lavarcarro.com>`
                 const body = `
                 <!DOCTYPE html>
                 <html lang="pt-BR">
