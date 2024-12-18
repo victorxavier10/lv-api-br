@@ -127,8 +127,9 @@ export const createUser = async (req, res) => {
                         </div>
                         <!-- Conteúdo -->
                         <div style="padding: 30px 20px; text-align: center;">
-                        <h1 style="font-size: 24px; color: #333333; margin-bottom: 20px;">Confirme seu E-mail na Lavar Carro para ativar seu anúncio e começar a receber contato de clientes.</h1>
-                        <a href="${webBaseUrl}/painel/${user.id}/${email}" style="display: inline-block; padding: 25px 25px; background-color: #437FE5; color: #ffffff; text-decoration: none; font-size: 20px; border-radius: 5px; margin: 20px 0;">CONFIRMAR E-MAIL</a>
+                        <h1 style="font-size: 24px; color: #333333; margin-bottom: 20px;">Confirme seu E-mail.</h1>
+                        <p style="font-size: 16px; color: #555555;">Na Lavar Carro é necessário ativar seu anúncio através da confirmação de e-mail para começar a receber contato de clientes. Ative sua conta agora mesmo!</p>
+                        <a href="${webBaseUrl}/painel/${user.id}/${email}" style="display: inline-block; padding: 25px 25px; background-color: #437FE5; color: #ffffff; text-decoration: none; font-size: 20px; border-radius: 5px; margin: 20px 0; font-weight: bold;"> CONFIRMAR E-MAIL </a>
                         <p style="font-size: 16px; color: #555555;">Se você não solicitou este e-mail, por favor ignore-o.</p>
                         </div>
                         <!-- Rodapé -->
