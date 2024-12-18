@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client"
 import { hashSync, genSaltSync } from "bcrypt"
 import sendEmail from '../services/nodemailer';
 import { profile } from "console";
+import { v7 as uuidv7 } from 'uuid';
 
 const prisma = new PrismaClient()
 const userClient = new PrismaClient().user
@@ -113,6 +114,8 @@ export const createUser = async (req, res) => {
         if (user) {
             const to = email
             const subject = "Lavar Carro - Confirme seu e-mail."
+            const text = `Versão texto simples: Confirme seu e-mail acessando o link: ${webBaseUrl}/painel/${user.id}/${email} caso não consiga visualizar o e-mail estilizado.`
+            const messageId = `${uuidv7()}+${to}@lavarcarro.com`
             const body = `
             <!DOCTYPE html>
             <html lang="pt-BR">
@@ -143,7 +146,7 @@ export const createUser = async (req, res) => {
                 </body>
             </html>
             `
-            await sendEmail(to, subject, body)
+            await sendEmail(to, subject, body, text, messageId)
             res.status(201).json({
                 data: {
                     userId: user.id,
@@ -247,6 +250,8 @@ export const generateCode = async (req, res) => {
             if (code) {
                 const to = email
                 const subject = "Lavar Carro - Código para alteração de senha."
+                const text = `Versão texto simples: Este é o seu código para alteração de senha: ${code.code} caso não consiga visualizar o e-mail estilizado.`
+                const messageId = `${uuidv7()}+${to}@lavarcarro.com`
                 const body = `
                 <!DOCTYPE html>
                 <html lang="pt-BR">
@@ -277,7 +282,7 @@ export const generateCode = async (req, res) => {
                     </body>
                 </html>
                 `
-                await sendEmail(to, subject, String(body));
+                await sendEmail(to, subject, String(body), text, messageId);
                 res.status(200).json({
                     data: {
                         email: email,
@@ -438,6 +443,8 @@ export const emailValidate = async (req, res) => {
             if (profile) {
                 const to = email
                 const subject = "Lavar Carro - E-mail validado com sucesso!"
+                const text = `Versão texto simples: Seja bem-vindo(a) à Lavar Carro! Estamos muito felizes em ter você conosco. Você faz parte da primeira plataforma dedicada à estéticas automotivas do Brasil. Caso não consiga visualizar o e-mail estilizado.`
+                const messageId = `${uuidv7()}+${to}@lavarcarro.com`
                 const body = `
                 <!DOCTYPE html>
                 <html lang="pt-BR">
@@ -468,7 +475,7 @@ export const emailValidate = async (req, res) => {
 
                 `
 
-                await sendEmail(to, subject, body);
+                await sendEmail(to, subject, body, text, messageId);
                 res.status(200).json({
                     data: {
                         email,
