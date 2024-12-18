@@ -10,7 +10,9 @@ const transporter = nodemailer.createTransport(
 const sendEmail = async (
   to: string | string[],
   subject: string,
-  body: string
+  body: string,
+  text: string,
+  messageId: string
 ): Promise<nodemailer.SentMessageInfo> => {
   try {
     const from = {
@@ -23,6 +25,8 @@ const sendEmail = async (
       to,
       subject,
       html: body,
+      text,
+      messageId
     });
 
     console.log('E-mail enviado:', info);
